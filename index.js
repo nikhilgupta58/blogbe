@@ -10,6 +10,19 @@ app.get("/", (req, res) => {
   res.send("TEST");
 });
 
+app.post("/create-blog", (req, res) => {
+  res.send("Success");
+});
+
+app.get("/get-blogs", (req, res) => {
+  res.send("Success");
+});
+
+app.get("/blog/:id", (req, res) => {
+  const id = req.params.id;
+  res.send(id);
+});
+
 app.listen(5001, () => {
   console.log("Server started");
 });
