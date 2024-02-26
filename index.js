@@ -47,10 +47,10 @@ app.get("/", (req, res) => {
 });
 
 app.post("/create-blog", async (req, res) => {
-  const { title, author,content } = req.body;
   try {
+    const { title, author, content } = req.body;
     const newBlog = await blog.create({ title, author, content });
-    res.status(200).send("Success");
+    res.json(newBlog)
   } catch (err) {
     console.log(err);
     res.status(500).send("Error creating blog post");
@@ -69,7 +69,9 @@ app.get("/get-blogs", async (req, res) => {
 
 app.get("/blog/:id", async (req, res) => {
   try {
+    const id = req.params.id;
     const blogPost = await blog.findByPk(id);
+    console.log(blogPost)
     if (!blogPost) {
       return res.status(404).send("Blog post not found");
     }
