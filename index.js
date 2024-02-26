@@ -1,6 +1,21 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+require('dotenv').config()
+const { Sequelize } = require('sequelize')
+
+const sequelize = new Sequelize(process.env.DB_URL, {
+  dialect: "postgres",
+  logging: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
+});
+
+sequelize.sync().then(() => console.log('DB Connect')).catch((e) => console.error(e))
 
 app.use(cors())
 
