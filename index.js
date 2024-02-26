@@ -17,7 +17,7 @@ const sequelize = new Sequelize(process.env.DB_URL, {
 
 sequelize.sync().then(() => console.log('DB Connect')).catch((e) => console.error(e))
 
-const blog = sequelize.define("blog", {
+const blog = sequelize.define("blog-post", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -79,6 +79,16 @@ app.get("/blog/:id", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send("Error fetching blog post");
+  }
+});
+
+app.delete("/reset", async (req, res) => {
+  try {
+    await blog.destroy({ where: {}, truncate: true })
+    res.status(200)
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error reseting db");
   }
 });
 
